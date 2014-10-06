@@ -6,7 +6,9 @@ if [ a == a$ANDROID_NDK_HOME ]; then
 fi
 
 pushd jni/ShadowVPN || exit 1
-#./autogen.sh || exit 1
+if [ ! -f configure ]; then
+  ./autogen.sh || exit 1
+fi
 
 if [ ! -f shadowvpn-android-arm/lib/libshadowvpn.a ]; then
     dist-build/android-arm.sh || exit 1
