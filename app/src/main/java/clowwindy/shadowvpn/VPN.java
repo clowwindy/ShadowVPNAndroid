@@ -1,32 +1,69 @@
 package clowwindy.shadowvpn;
 
-/**
- * Created by clowwindy on 10/6/14.
- */
+import android.os.ParcelFileDescriptor;
+import java.io.IOException;
+
 public class VPN implements Runnable {
-    int tunFd;
+    ParcelFileDescriptor tunFd;
+    String password;
+    String server;
+    int port;
+    int mtu;
     int sockFd;
     Thread vpnThread;
 
-    public VPN(int tunFd) {
+    public VPN(ParcelFileDescriptor tunFd, String password, String server, int port,
+               int mtu) {
         this.tunFd = tunFd;
+        this.password = password;
+        this.server = server;
+        this.port = port;
+        this.mtu = mtu;
     }
 
     @Override
     public void run() {
-        this.runVPN();
+        System.err.println("Starting VPN");
+        this.nativeRunVPN(tunFd.getFd(), password, server, port, mtu);
+        System.err.println("VPN exited");
     }
 
-    public native int runVPN();
+    protected synchronized native int nativeRunVPN(int tunFd, String password, String server,
+                                                   int port, int mtu);
 
-    public native int stopVPN();
+    protected synchronized native int nativeStopVPN();
 
-    public void startVPN() throws Exception {
+    protected synchronized native int nativeGetSockFd();
+
+    public void startVPN() {
         if (vpnThread != null) {
-            throw new Exception("already running");
+            throw new RuntimeException("already running");
         }
         vpnThread = new Thread(this);
         vpnThread.start();
+        for (int i = 0; i < 10; i++) {
+            try {
+                Thread.sleep(100, 0);
+            } catch (InterruptedException e) {
+                // do nothing
+            }
+            if (0 != (sockFd = this.nativeGetSockFd())) {
+                break;
+            }
+        }
+    }
+
+    public void stopVPN() {
+        this.nativeStopVPN();
+        try {
+            tunFd.close();
+        } catch (IOException e) {
+            // do nothing
+        }
+    }
+
+    public int getSockFd() {
+        return sockFd;
     }
 
     static {
