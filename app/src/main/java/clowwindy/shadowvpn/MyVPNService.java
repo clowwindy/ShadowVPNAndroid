@@ -29,4 +29,7 @@ public class MyVPNService extends VpnService {
     public void onRevoke() {
         super.onRevoke();
     }
+    static {
+
+    }
 }
