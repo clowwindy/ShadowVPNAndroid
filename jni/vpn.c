@@ -1,16 +1,19 @@
-
 #include <string.h>
 #include <stdio.h>
 #include <jni.h>
+#include <shadowvpn.h>
 
-int crypto_init();
+static int initialized = 0;
 
-int Java_clowwindy_shadowvpn_VPN_runVPN( JNIEnv* env, jobject thiz ) {
-    int r = crypto_init();
-    return r;
+jint Java_clowwindy_shadowvpn_VPN_runVPN( JNIEnv* env, jobject thiz ) {
+  int r;
+  if (!initialized) {
+    crypto_init();
+  }
+  return r;
 }
 
-int Java_clowwindy_shadowvpn_VPN_stopVPN( JNIEnv* env, jobject thiz ) {
-    int r = crypto_init();
-    return r;
+jint Java_clowwindy_shadowvpn_VPN_stopVPN( JNIEnv* env, jobject thiz ) {
+  int r = stop_vpn();
+  return r;
 }

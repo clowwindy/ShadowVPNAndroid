@@ -11,7 +11,7 @@
 
         <uses-permission android:name="android.permission.INTERNET"/>
 
-        <service android:name="clowwindy.shadowvpn.MyVPNService"
+        <service android:name=".ShadowVPNService"
             android:permission="android.permission.BIND_VPN_SERVICE">
             <intent-filter>
                 <action android:name="android.net.VpnService"/>

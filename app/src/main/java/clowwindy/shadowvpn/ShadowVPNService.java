@@ -5,11 +5,12 @@ import android.net.VpnService;
 import android.content.Intent;
 import android.os.ParcelFileDescriptor;
 
-public class MyVPNService extends VpnService {
+public class ShadowVPNService extends VpnService {
 
     private ParcelFileDescriptor tunFd;
 
-    public MyVPNService() {
+    public ShadowVPNService() {
+
     }
 
     @Override
@@ -28,8 +29,5 @@ public class MyVPNService extends VpnService {
     @Override
     public void onRevoke() {
         super.onRevoke();
-    }
-    static {
-
     }
 }
