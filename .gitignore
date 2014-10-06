@@ -36,3 +36,10 @@ Thumbs.db
 #.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
 .gradle
 build/
+
+app/obj/
+jni/armeabi-v7a/
+jni/armeabi/
+jni/mips/
+jni/x86/
+obj/
