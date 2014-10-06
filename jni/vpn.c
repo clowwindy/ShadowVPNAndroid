@@ -15,8 +15,10 @@
  *
  */
 #include <string.h>
+#include <stdio.h>
 #include <jni.h>
-#include <sodium.h>
+
+int crypto_init();
 
 /* This is a trivial JNI example where we use a native method
  * to return a new VM String. See the corresponding Java source
