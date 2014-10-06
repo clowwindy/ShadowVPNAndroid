@@ -2,9 +2,13 @@ package clowwindy.shadowvpn;
 
 import android.os.ParcelFileDescriptor;
 import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.Socket;
+import java.net.SocketException;
 
 public class VPN implements Runnable {
     ParcelFileDescriptor tunFd;
+    DatagramSocket socket;
     String password;
     String server;
     int port;
@@ -19,21 +23,28 @@ public class VPN implements Runnable {
         this.server = server;
         this.port = port;
         this.mtu = mtu;
+        try {
+            socket = new DatagramSocket();
+            socket.getFileDescriptor$();
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void run() {
         System.err.println("Starting VPN");
-        this.nativeRunVPN(tunFd.getFd(), password, server, port, mtu);
+        int r = this.nativeRunVPN(tunFd.getFd(), password, server, port, mtu);
+        System.err.println(r);
         System.err.println("VPN exited");
     }
 
-    protected synchronized native int nativeRunVPN(int tunFd, String password, String server,
+    protected native int nativeRunVPN(int tunFd, String password, String server,
                                                    int port, int mtu);
 
-    protected synchronized native int nativeStopVPN();
+    protected native int nativeStopVPN();
 
-    protected synchronized native int nativeGetSockFd();
+    protected native int nativeGetSockFd();
 
     public void startVPN() {
         if (vpnThread != null) {
@@ -41,9 +52,9 @@ public class VPN implements Runnable {
         }
         vpnThread = new Thread(this);
         vpnThread.start();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             try {
-                Thread.sleep(100, 0);
+                Thread.sleep(10, 0);
             } catch (InterruptedException e) {
                 // do nothing
             }

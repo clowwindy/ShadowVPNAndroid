@@ -29,7 +29,7 @@ public class ShadowVPNService extends VpnService {
                 .establish();
         vpn = new VPN(tunFd, "my_password", "10.0.1.109", 1123, 1440);
         vpn.startVPN();
-        this.protect(vpn.getSockFd());
+        boolean r = this.protect(vpn.getSockFd());
         return START_STICKY;
     }
 

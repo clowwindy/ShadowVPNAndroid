@@ -22,5 +22,6 @@ include $(CLEAR_VARS)
 LOCAL_MODULE    := vpn
 LOCAL_SRC_FILES := vpn.c
 LOCAL_CFLAGS := -IShadowVPN/shadowvpn-android-armv7/include/ -IShadowVPN/src/
+LOCAL_LDLIBS += -L$(SYSROOT)/usr/lib -llog
 LOCAL_STATIC_LIBRARIES := shadowvpn-prebuilt sodium-prebuilt
 include $(BUILD_SHARED_LIBRARY)
