@@ -10,14 +10,10 @@ static int initialized = 0;
 static vpn_ctx_t vpn_ctx;
 shadowvpn_args_t args;
 
-jint Java_clowwindy_shadowvpn_VPN_nativeInitVPN(JNIEnv* env,
-                                         jobject thiz,
-                                         jint tun_fd,
-                                         jstring password,
-                                         jstring server,
-                                         jint port,
-                                         jint mtu
-                                         ) {
+jint Java_clowwindy_shadowvpn_VPN_nativeInitVPN(JNIEnv* env, jobject thiz,
+                                                jint tun_fd, jstring password,
+                                                jstring server, jint port,
+                                                jint mtu) {
   bzero(&args, sizeof(args));
   if (!initialized) {
     crypto_init();
@@ -25,7 +21,6 @@ jint Java_clowwindy_shadowvpn_VPN_nativeInitVPN(JNIEnv* env,
   }
   const char *c_password = (*env)->GetStringUTFChars(env, password, NULL);
   if (0 != crypto_set_password(c_password, strlen(c_password))) {
-    // TODO throw Exception instead
     return -1;
   }
   args.password = c_password;
@@ -53,8 +48,7 @@ jint Java_clowwindy_shadowvpn_VPN_nativeInitVPN(JNIEnv* env,
   return 0;
 }
 
-jint Java_clowwindy_shadowvpn_VPN_nativeRunVPN(JNIEnv* env,
-                                         jobject thiz) {
+jint Java_clowwindy_shadowvpn_VPN_nativeRunVPN(JNIEnv* env, jobject thiz) {
   return vpn_run(&vpn_ctx);
 }
 

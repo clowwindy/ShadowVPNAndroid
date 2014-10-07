@@ -9,7 +9,6 @@ public class VPN implements Runnable {
     String server;
     int port;
     int mtu;
-    int sockFd;
     Thread vpnThread;
 
     public VPN(ParcelFileDescriptor tunFd, String password, String server, int port,
