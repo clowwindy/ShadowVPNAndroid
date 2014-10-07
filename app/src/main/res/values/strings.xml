@@ -3,7 +3,6 @@
 
     <string name="app_name">ShadowVPN</string>
     <string name="title_activity_main">ShadowVPN</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>

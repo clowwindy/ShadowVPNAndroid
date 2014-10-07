@@ -10,7 +10,7 @@
     style="@style/AppTheme">
 
     <TextView
-        android:text="@string/hello_world"
+        android:text="settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView" />

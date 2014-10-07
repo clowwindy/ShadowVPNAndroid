@@ -5,7 +5,7 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "clowwindy.myapplication"
+        applicationId "clowwindy.shadowvpn"
         minSdkVersion 15
         targetSdkVersion 20
         versionCode 1
