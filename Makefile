@@ -1,3 +1,12 @@
+all: app/src/main/jniLibs/armeabi/libvpn.so
+
+.PHONY: clean
+
+clean:
+	rm -rf jni/ShadowVPN/shadowvpn-android-*
+	rm -rf libs
+	rm -rf app/src/main/jniLibs
+
 app/src/main/jniLibs/armeabi/libvpn.so: jni/vpn.c jni/Android.mk
 	if [ a == a$(ANDROID_NDK_HOME) ]; then \
 		echo ANDROID_NDK_HOME is not set ;\

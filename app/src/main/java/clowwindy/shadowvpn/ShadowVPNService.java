@@ -28,8 +28,10 @@ public class ShadowVPNService extends VpnService {
                 .setSession("ShadowVPN")
                 .establish();
         vpn = new VPN(tunFd, "my_password", "10.0.1.109", 1123, 1440);
+        if (!this.protect(vpn.getSockFd())) {
+            throw new RuntimeException("can not protect socket");
+        }
         vpn.startVPN();
-        boolean r = this.protect(vpn.getSockFd());
         return START_STICKY;
     }
 

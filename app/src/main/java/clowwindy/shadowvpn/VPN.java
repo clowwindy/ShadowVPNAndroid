@@ -2,13 +2,9 @@ package clowwindy.shadowvpn;
 
 import android.os.ParcelFileDescriptor;
 import java.io.IOException;
-import java.net.DatagramSocket;
-import java.net.Socket;
-import java.net.SocketException;
 
 public class VPN implements Runnable {
     ParcelFileDescriptor tunFd;
-    DatagramSocket socket;
     String password;
     String server;
     int port;
@@ -23,24 +19,22 @@ public class VPN implements Runnable {
         this.server = server;
         this.port = port;
         this.mtu = mtu;
-        try {
-            socket = new DatagramSocket();
-            socket.getFileDescriptor$();
-        } catch (SocketException e) {
-            throw new RuntimeException(e);
-        }
+        int r = this.nativeInitVPN(tunFd.getFd(), password, server, port, mtu);
+        System.err.println(r);
     }
 
     @Override
     public void run() {
         System.err.println("Starting VPN");
-        int r = this.nativeRunVPN(tunFd.getFd(), password, server, port, mtu);
+        int r = this.nativeRunVPN();
         System.err.println(r);
         System.err.println("VPN exited");
     }
 
-    protected native int nativeRunVPN(int tunFd, String password, String server,
+    protected native int nativeInitVPN(int tunFd, String password, String server,
                                                    int port, int mtu);
+
+    protected native int nativeRunVPN();
 
     protected native int nativeStopVPN();
 
@@ -52,20 +46,15 @@ public class VPN implements Runnable {
         }
         vpnThread = new Thread(this);
         vpnThread.start();
-        for (int i = 0; i < 100; i++) {
-            try {
-                Thread.sleep(10, 0);
-            } catch (InterruptedException e) {
-                // do nothing
-            }
-            if (0 != (sockFd = this.nativeGetSockFd())) {
-                break;
-            }
-        }
     }
 
     public void stopVPN() {
         this.nativeStopVPN();
+        try {
+            vpnThread.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
         try {
             tunFd.close();
         } catch (IOException e) {
@@ -74,7 +63,7 @@ public class VPN implements Runnable {
     }
 
     public int getSockFd() {
-        return sockFd;
+        return nativeGetSockFd();
     }
 
     static {
