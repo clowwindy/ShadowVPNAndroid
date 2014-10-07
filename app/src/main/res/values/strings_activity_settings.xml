@@ -1,0 +1,20 @@
+<resources>
+    <string name="title_activity_settings">ShadowVPN</string>
+
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_enable_vpn">Enable VPN</string>
+    <string name="pref_description_enable_vpn">Recommended to disable in notifications</string>
+
+    <string name="pref_header_vpn_settings">VPN Settings</string>
+
+    <string name="pref_title_server">Server</string>
+    <string name="pref_default_server">127.0.0.1</string>
+    <string name="pref_title_port">Port</string>
+    <string name="pref_default_port">1123</string>
+    <string name="pref_title_password">Password</string>
+    <string name="pref_title_local_ip">VPN Local IP</string>
+    <string name="pref_default_local_ip">10.7.0.2</string>
+    <string name="pref_title_mtu">MTU</string>
+    <string name="pref_default_mtu">1440</string>
+</resources>

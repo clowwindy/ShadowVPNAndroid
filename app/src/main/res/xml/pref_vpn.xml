@@ -1,0 +1,52 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:key="server"
+        android:title="@string/pref_title_server"
+        android:defaultValue="@string/pref_default_server"
+        android:selectAllOnFocus="true"
+        android:inputType="text|textUri"
+        android:capitalize="none"
+        android:singleLine="true"
+        android:maxLines="1" />
+
+    <EditTextPreference
+        android:key="port"
+        android:title="@string/pref_title_port"
+        android:defaultValue="@string/pref_default_port"
+        android:selectAllOnFocus="true"
+        android:inputType="number"
+        android:capitalize="none"
+        android:singleLine="true"
+        android:maxLines="1" />
+
+    <EditTextPreference
+        android:key="password"
+        android:title="@string/pref_title_password"
+        android:defaultValue=""
+        android:selectAllOnFocus="true"
+        android:inputType="textPassword"
+        android:singleLine="true"
+        android:maxLines="1" />
+
+    <EditTextPreference
+        android:key="local_ip"
+        android:title="@string/pref_title_local_ip"
+        android:defaultValue="@string/pref_default_local_ip"
+        android:selectAllOnFocus="true"
+        android:inputType="text|textUri"
+        android:capitalize="none"
+        android:singleLine="true"
+        android:maxLines="1" />
+
+    <EditTextPreference
+        android:key="mtu"
+        android:title="@string/pref_title_mtu"
+        android:defaultValue="@string/pref_default_mtu"
+        android:selectAllOnFocus="true"
+        android:inputType="number"
+        android:capitalize="none"
+        android:singleLine="true"
+        android:maxLines="1" />
+
+</PreferenceScreen>

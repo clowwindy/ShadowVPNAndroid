@@ -5,6 +5,8 @@ import android.net.VpnService;
 import android.content.Intent;
 import android.os.ParcelFileDescriptor;
 
+import java.io.IOException;
+
 public class ShadowVPNService extends VpnService {
 
     static private VPN vpn;
@@ -27,7 +29,13 @@ public class ShadowVPNService extends VpnService {
                 .setConfigureIntent(pendIntent)
                 .setSession("ShadowVPN")
                 .establish();
-        vpn = new VPN(tunFd, "my_password", "10.0.1.109", 1123, 1440);
+        try {
+            vpn = new VPN(tunFd, "my_password", "10.0.1.109", 1123, 1440);
+        } catch (IOException e) {
+            System.err.println(e);
+            // TODO show the error to the user
+            this.stopSelf();
+        }
         if (!this.protect(vpn.getSockFd())) {
             throw new RuntimeException("can not protect socket");
         }

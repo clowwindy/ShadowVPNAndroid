@@ -1,0 +1,13 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="clowwindy.shadowvpn.SettingsActivity$GeneralPreferenceFragment"
+        android:title="@string/pref_header_general" />
+
+    <header
+        android:fragment="clowwindy.shadowvpn.SettingsActivity$VPNPreferenceFragment"
+        android:title="@string/pref_header_vpn_settings" />
+
+</preference-headers>

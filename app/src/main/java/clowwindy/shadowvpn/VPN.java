@@ -12,14 +12,16 @@ public class VPN implements Runnable {
     Thread vpnThread;
 
     public VPN(ParcelFileDescriptor tunFd, String password, String server, int port,
-               int mtu) {
+               int mtu) throws IOException {
         this.tunFd = tunFd;
         this.password = password;
         this.server = server;
         this.port = port;
         this.mtu = mtu;
         int r = this.nativeInitVPN(tunFd.getFd(), password, server, port, mtu);
-        System.err.println(r);
+        if (r != 0) {
+            throw new IOException("can not create VPN");
+        }
     }
 
     @Override
