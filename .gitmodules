@@ -1,0 +1,3 @@
+[submodule "jni/ShadowVPN"]
+	path = jni/ShadowVPN
+	url = https://github.com/clowwindy/ShadowVPN.git

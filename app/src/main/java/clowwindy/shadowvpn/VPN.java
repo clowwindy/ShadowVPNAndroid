@@ -28,6 +28,7 @@ public class VPN implements Runnable {
     public void run() {
         System.err.println("Starting VPN");
         int r = this.nativeRunVPN();
+        // TODO stop service when exit abnormally
         System.err.println(r);
         System.err.println("VPN exited");
     }

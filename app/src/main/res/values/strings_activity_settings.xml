@@ -1,13 +1,6 @@
 <resources>
     <string name="title_activity_settings">ShadowVPN</string>
 
-    <string name="pref_header_general">General</string>
-
-    <string name="pref_title_enable_vpn">Enable VPN</string>
-    <string name="pref_description_enable_vpn">Recommended to disable in notifications</string>
-
-    <string name="pref_header_vpn_settings">VPN Settings</string>
-
     <string name="pref_title_server">Server</string>
     <string name="pref_default_server">127.0.0.1</string>
     <string name="pref_title_port">Port</string>

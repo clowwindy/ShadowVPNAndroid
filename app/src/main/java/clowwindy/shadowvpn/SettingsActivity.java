@@ -1,28 +1,37 @@
 package clowwindy.shadowvpn;
 
 import android.annotation.TargetApi;
-import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Configuration;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.net.VpnService;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
-import android.text.TextUtils;
+import android.preference.SwitchPreference;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -36,8 +45,53 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends PreferenceActivity {
+    public static final String HANDLER = "handler";
+    protected Switch actionSwitch;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            SettingsActivity.this.onResume();
+        }
+    };
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+    };
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+
+        // Get widget's instance
+        RelativeLayout l = (RelativeLayout)menu.findItem(R.id.myswitch).getActionView();
+        actionSwitch = (Switch)l.findViewById(R.id.switchForActionBar);
+        actionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    startVPN();
+                } else {
+                    stopVPN();
+                }
+            }
+        });
+        return true;
+    }
 
     protected void startVPN() {
+        if (isVPNRunning())
+            return;
+
         Intent intent = VpnService.prepare(this);
 
         if (intent != null)
@@ -48,6 +102,10 @@ public class SettingsActivity extends PreferenceActivity {
 
     protected void stopVPN() {
         // TODO
+        if (isVPNRunning()) {
+            unbindService(connection);
+            boolean r = stopService(new Intent(this, ShadowVPNService.class));
+        }
     }
 
 
@@ -57,19 +115,33 @@ public class SettingsActivity extends PreferenceActivity {
         if (result == RESULT_OK)
         {
             Intent intent = new Intent(this, ShadowVPNService.class);
+            intent.putExtra(HANDLER, new Messenger(this.handler));
+            // TODO validate
+            intent.putExtra(ShadowVPNService.VPN_SERVER,
+                    ((EditTextPreference)findPreference("server")).getText());
+            intent.putExtra(ShadowVPNService.VPN_PORT,
+                    Integer.parseInt(((EditTextPreference)findPreference("port")).getText()));
+            intent.putExtra(ShadowVPNService.VPN_LOCAL_IP,
+                    ((EditTextPreference)findPreference("local_ip")).getText());
+            intent.putExtra(ShadowVPNService.VPN_PASSWORD,
+                    ((EditTextPreference)findPreference("password")).getText());
+            intent.putExtra(ShadowVPNService.VPN_MTU,
+                    Integer.parseInt(((EditTextPreference)findPreference("mtu")).getText()));
+            bindService(intent, connection, Context.BIND_AUTO_CREATE);
             startService(intent);
         }
     }
 
     protected boolean isVPNRunning() {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE))
-        {
-            if ("clowwindy.ShadowVPNService".equals(service.service.getClassName()))
-                return true;
-        }
-        return false;
+        return ShadowVPNService.isRunning();
+//        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+//
+//        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE))
+//        {
+//            if ("clowwindy.ShadowVPNService".equals(service.service.getClassName()))
+//                return true;
+//        }
+//        return false;
     }
 
     /**
@@ -80,14 +152,19 @@ public class SettingsActivity extends PreferenceActivity {
      */
     private static final boolean ALWAYS_SIMPLE_PREFS = false;
 
+    @Override
+    protected void onResume() {
+        if (actionSwitch != null) {
+            actionSwitch.setChecked(this.isVPNRunning());
+        }
+        super.onResume();
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
         setupSimplePreferencesScreen();
-
-        // TODO initialize enable_vpn state
     }
 
     private void setupSimplePreferencesScreen() {
@@ -95,25 +172,12 @@ public class SettingsActivity extends PreferenceActivity {
             return;
         }
 
-        addPreferencesFromResource(R.xml.pref_general);
-
-        PreferenceCategory fakeHeader = new PreferenceCategory(this);
-        fakeHeader.setTitle(R.string.pref_header_vpn_settings);
-        getPreferenceScreen().addPreference(fakeHeader);
         addPreferencesFromResource(R.xml.pref_vpn);
 
         bindPreferenceSummaryToValue(findPreference("server"));
         bindPreferenceSummaryToValue(findPreference("port"));
         bindPreferenceSummaryToValue(findPreference("local_ip"));
         bindPreferenceSummaryToValue(findPreference("mtu"));
-        findPreference("enable_vpn").setOnPreferenceChangeListener(
-                new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                // TODO start/stop VPN
-                return true;
-            }
-        });
     }
 
     /** {@inheritDoc} */
@@ -142,15 +206,6 @@ public class SettingsActivity extends PreferenceActivity {
         return ALWAYS_SIMPLE_PREFS
                 || Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
                 || !isXLargeTablet(context);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public void onBuildHeaders(List<Header> target) {
-        if (!isSimplePreferences(this)) {
-            loadHeadersFromResource(R.xml.pref_headers, target);
-        }
     }
 
     /**
@@ -206,20 +261,6 @@ public class SettingsActivity extends PreferenceActivity {
                 PreferenceManager
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
-    }
-
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_general);
-
-        }
     }
 
     /**
