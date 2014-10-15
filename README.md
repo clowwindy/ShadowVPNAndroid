@@ -1,9 +1,17 @@
 ShadowVPN for Android
----------------------
+=====================
 
-In progress.
+[ShadowVPN] for Android. Still in progress.
 
-If you insist to have a try:
+Download
+--------
+
+ShadowVPN is beta and may have bugs. If you still want to have a try:
+
+[Download beta].
+
+Build yourself
+--------------
 
 1. build native library.
 
@@ -14,3 +22,6 @@ If you insist to have a try:
 
 2. open Android Studio and import the project.
 3. build.
+
+[ShadowVPN]: https://github.com/clowwindy/ShadowVPN
+[Download beta]: https://play.google.com/store/apps/details?id=clowwindy.shadowvpn
