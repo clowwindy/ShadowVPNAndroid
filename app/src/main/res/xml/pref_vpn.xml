@@ -49,4 +49,10 @@
         android:singleLine="true"
         android:maxLines="1" />
 
+    <CheckBoxPreference
+        android:key="chnroutes"
+        android:title="@string/pref_title_chnroutes"
+        android:summary="@string/pref_summary_chnroutes" />
+
+
 </PreferenceScreen>

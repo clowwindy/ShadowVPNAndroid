@@ -28,6 +28,7 @@ public class ShadowVPNService extends VpnService {
     public static final String VPN_PASSWORD = "password";
     public static final String VPN_LOCAL_IP = "local_ip";
     public static final String VPN_MTU = "mtu";
+    public static final String VPN_CHNROUTES = "chnroutes";
 
     public static boolean isRunning() {
         return isRunning;
@@ -65,13 +66,17 @@ public class ShadowVPNService extends VpnService {
             br = new BufferedReader(
                     new InputStreamReader(getResources().openRawResource(R.raw.foreign)));
             String line;
-            while ((line = br.readLine()) != null) {
-                String[] sp = line.split("/");
-                if (sp.length == 2) {
-                    String net = sp[0];
-                    int prefix = Integer.parseInt(sp[1]);
-                    b.addRoute(net, prefix);
+            if (extras.getBoolean(VPN_CHNROUTES)) {
+                while ((line = br.readLine()) != null) {
+                    String[] sp = line.split("/");
+                    if (sp.length == 2) {
+                        String net = sp[0];
+                        int prefix = Integer.parseInt(sp[1]);
+                        b.addRoute(net, prefix);
+                    }
                 }
+            } else {
+                b.addRoute("0.0.0.0", 0);
             }
             tunFd = b.establish();
         } catch (RuntimeException e) {

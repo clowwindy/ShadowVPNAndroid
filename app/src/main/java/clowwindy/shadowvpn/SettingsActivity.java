@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -120,13 +121,15 @@ public class SettingsActivity extends PreferenceActivity {
             intent.putExtra(ShadowVPNService.VPN_SERVER,
                     ((EditTextPreference)findPreference("server")).getText());
             intent.putExtra(ShadowVPNService.VPN_PORT,
-                    Integer.parseInt(((EditTextPreference)findPreference("port")).getText()));
+                    Integer.parseInt(((EditTextPreference) findPreference("port")).getText()));
             intent.putExtra(ShadowVPNService.VPN_LOCAL_IP,
                     ((EditTextPreference)findPreference("local_ip")).getText());
             intent.putExtra(ShadowVPNService.VPN_PASSWORD,
                     ((EditTextPreference)findPreference("password")).getText());
             intent.putExtra(ShadowVPNService.VPN_MTU,
-                    Integer.parseInt(((EditTextPreference)findPreference("mtu")).getText()));
+                    Integer.parseInt(((EditTextPreference) findPreference("mtu")).getText()));
+            intent.putExtra(ShadowVPNService.VPN_CHNROUTES,
+                    ((CheckBoxPreference) findPreference("chnroutes")).isChecked());
             bindService(intent, connection, Context.BIND_AUTO_CREATE);
             startService(intent);
         }

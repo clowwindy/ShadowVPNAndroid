@@ -10,4 +10,6 @@
     <string name="pref_default_local_ip">10.7.0.2</string>
     <string name="pref_title_mtu">MTU</string>
     <string name="pref_default_mtu">1440</string>
+    <string name="pref_title_chnroutes">CHN Route</string>
+    <string name="pref_summary_chnroutes">Bypass traffic in China (a bit slow when starting)</string>
 </resources>
