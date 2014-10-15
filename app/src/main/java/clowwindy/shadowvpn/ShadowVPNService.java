@@ -1,6 +1,7 @@
 package clowwindy.shadowvpn;
 
 import android.app.PendingIntent;
+import android.content.res.Resources;
 import android.net.VpnService;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +10,11 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.ParcelFileDescriptor;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class ShadowVPNService extends VpnService {
 
@@ -48,18 +53,41 @@ public class ShadowVPNService extends VpnService {
         Intent mainIntent = new Intent(this.getApplicationContext(), SettingsActivity.class);
         PendingIntent pendIntent =
                 PendingIntent.getActivity(this.getApplicationContext(), 0, mainIntent, 0);
+
+        BufferedReader br = null;
         try {
-            tunFd = new Builder()
-                    .addAddress(extras.getString(VPN_LOCAL_IP), 24)
-                    .addRoute("0.0.0.0", 0)
-                    .addDnsServer("8.8.8.8")
-                    .addDnsServer("8.8.4.4")
-                    .setConfigureIntent(pendIntent)
-                    .setSession("ShadowVPN")
-                    .establish();
+            Builder b = new Builder();
+            b.addAddress(extras.getString(VPN_LOCAL_IP), 24)
+                .addDnsServer("8.8.8.8")
+                .addDnsServer("8.8.4.4")
+                .setConfigureIntent(pendIntent)
+                .setSession("ShadowVPN");
+            br = new BufferedReader(
+                    new InputStreamReader(getResources().openRawResource(R.raw.foreign)));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] sp = line.split("/");
+                if (sp.length == 2) {
+                    String net = sp[0];
+                    int prefix = Integer.parseInt(sp[1]);
+                    b.addRoute(net, prefix);
+                }
+            }
+            tunFd = b.establish();
         } catch (RuntimeException e) {
             System.err.println(e);
             return START_STICKY;
+        } catch (IOException e) {
+            System.err.println(e);
+            return START_STICKY;
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException e) {
+                System.err.println(e);
+            }
         }
         try {
             vpn = new VPN(tunFd, extras.getString(VPN_PASSWORD),
