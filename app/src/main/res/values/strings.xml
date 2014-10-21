@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ShadowVPN</string>
-    <string name="title_activity_main">ShadowVPN</string>
-    <string name="action_settings">Settings</string>
-    <string name="start">Start</string>
-    <string name="stop">Stop</string>
+	<string name="app_name">ShadowVPN</string>
+	<string name="title_activity_main">ShadowVPN</string>
+
+	<string name="options_menu_add">Add Configure</string>
+
+	<string name="context_menu_stop_configure">Disconnect</string>
+	<string name="context_menu_edit_configure">Edit Configure</string>
+	<string name="context_menu_delete_configure">Delete Configure</string>
+
+	<string name="floating_label_configure_title">Title</string>
+	<string name="floating_label_configure_server_ip">Server IP</string>
+	<string name="floating_label_configure_port">Port</string>
+	<string name="floating_label_configure_password">Password</string>
+	<string name="floating_label_configure_local_ip">Local IP</string>
+	<string name="floating_label_configure_maximum_transmission_units">MTU</string>
 
 </resources>

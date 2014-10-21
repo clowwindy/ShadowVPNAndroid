@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent" android:layout_height="match_parent">
+
+	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:layout_marginLeft="@dimen/activity_horizontal_margin"
+		android:layout_marginRight="@dimen/activity_horizontal_margin"
+		android:layout_marginTop="@dimen/activity_vertical_margin"
+		android:layout_marginBottom="@dimen/activity_vertical_margin"
+		android:orientation="vertical">
+
+		<com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText
+			android:id="@+id/text_title"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:inputType="text"
+			app:flw_labelTextColor="@android:color/secondary_text_dark"
+			app:flw_inputWidgetTextColor="@android:color/primary_text_dark"
+			app:flw_labelTextSize="@dimen/text_size_medium"
+			app:flw_inputWidgetTextSize="@dimen/text_size_large"
+			app:flw_labelText="@string/floating_label_configure_title" />
+
+		<com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText
+			android:id="@+id/text_server_ip"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:inputType="text"
+			app:flw_labelTextColor="@android:color/secondary_text_dark"
+			app:flw_inputWidgetTextColor="@android:color/primary_text_dark"
+			app:flw_labelTextSize="@dimen/text_size_medium"
+			app:flw_inputWidgetTextSize="@dimen/text_size_large"
+			app:flw_labelText="@string/floating_label_configure_server_ip" />
+
+		<com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText
+			android:id="@+id/text_port"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:inputType="number"
+			app:flw_labelTextColor="@android:color/secondary_text_dark"
+			app:flw_inputWidgetTextColor="@android:color/primary_text_dark"
+			app:flw_labelTextSize="@dimen/text_size_medium"
+			app:flw_inputWidgetTextSize="@dimen/text_size_large"
+			app:flw_labelText="@string/floating_label_configure_port" />
+
+		<com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText
+			android:id="@+id/text_password"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:inputType="textVisiblePassword"
+			app:flw_labelTextColor="@android:color/secondary_text_dark"
+			app:flw_inputWidgetTextColor="@android:color/primary_text_dark"
+			app:flw_labelTextSize="@dimen/text_size_medium"
+			app:flw_inputWidgetTextSize="@dimen/text_size_large"
+			app:flw_labelText="@string/floating_label_configure_password" />
+
+		<com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText
+			android:id="@+id/text_local_ip"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:inputType="text"
+			app:flw_labelTextColor="@android:color/secondary_text_dark"
+			app:flw_inputWidgetTextColor="@android:color/primary_text_dark"
+			app:flw_labelTextSize="@dimen/text_size_medium"
+			app:flw_inputWidgetTextSize="@dimen/text_size_large"
+			app:flw_labelText="@string/floating_label_configure_local_ip" />
+
+		<com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText
+			android:id="@+id/text_maximum_transmission_units"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:inputType="number"
+			app:flw_labelTextColor="@android:color/secondary_text_dark"
+			app:flw_inputWidgetTextColor="@android:color/primary_text_dark"
+			app:flw_labelTextSize="@dimen/text_size_medium"
+			app:flw_inputWidgetTextSize="@dimen/text_size_large"
+			app:flw_labelText="@string/floating_label_configure_maximum_transmission_units" />
+
+	</LinearLayout>
+
+</ScrollView>

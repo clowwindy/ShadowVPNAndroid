@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="clowwindy.shadowvpn" >
+	package="org.shadowvpn.shadowvpn">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
+		android:theme="@style/AppTheme" android:allowBackup="true">
 
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <service
-            android:name=".ShadowVPNService"
-            android:permission="android.permission.BIND_VPN_SERVICE" >
-            <intent-filter>
-                <action android:name="android.net.VpnService" />
-            </intent-filter>
-        </service>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_main" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
+		<activity android:name="org.shadowvpn.shadowvpn.ui.activity.MainActivity"
+			android:label="@string/title_activity_main">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+
+		<service android:name="org.shadowvpn.shadowvpn.service.ShadowVPNService"
+			android:exported="false"
+			android:permission="android.permission.BIND_VPN_SERVICE">
+			<intent-filter>
+				<action android:name="android.net.VpnService" />
+			</intent-filter>
+		</service>
+
+	</application>
 
 </manifest>
