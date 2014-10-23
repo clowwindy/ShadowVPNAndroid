@@ -16,6 +16,11 @@
 			</intent-filter>
 		</activity>
 
+		<activity android:name="org.shadowvpn.shadowvpn.ui.activity.ShadowVPNConfigureEditActivity"
+			android:label="@string/title_activity_configure_edit"
+			android:theme="@style/AppTheme.Edit">
+		</activity>
+
 		<service android:name="org.shadowvpn.shadowvpn.service.ShadowVPNService"
 			android:exported="false"
 			android:permission="android.permission.BIND_VPN_SERVICE">

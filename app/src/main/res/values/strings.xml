@@ -2,9 +2,12 @@
 <resources>
 
 	<string name="app_name">ShadowVPN</string>
-	<string name="title_activity_main">ShadowVPN</string>
+	<string name="title_activity_main">@string/app_name</string>
+	<string name="title_activity_configure_edit">Edit Configure</string>
 
 	<string name="options_menu_add">Add Configure</string>
+	<string name="options_menu_discard">Discard changes</string>
+	<string name="options_menu_delete">Delete</string>
 
 	<string name="context_menu_stop_configure">Disconnect</string>
 	<string name="context_menu_edit_configure">Edit Configure</string>
@@ -16,5 +19,13 @@
 	<string name="floating_label_configure_password">Password</string>
 	<string name="floating_label_configure_local_ip">Local IP</string>
 	<string name="floating_label_configure_maximum_transmission_units">MTU</string>
+
+	<string name="toast_vpn_configure_title_null">Title cannot be null</string>
+	<string name="toast_vpn_configure_server_ip_null">Server IP cannot be null</string>
+	<string name="toast_vpn_configure_port_null">Port be null</string>
+	<string name="toast_vpn_configure_password_null">Password cannot be null</string>
+	<string name="toast_vpn_configure_local_ip_null">Local IP cannot be null</string>
+	<string name="toast_vpn_configure_maximum_transmission_units_null">MTU cannot be null</string>
+	<string name="toast_vpn_configure_exists">The Configure[%1$s] exists, please change the title</string>
 
 </resources>

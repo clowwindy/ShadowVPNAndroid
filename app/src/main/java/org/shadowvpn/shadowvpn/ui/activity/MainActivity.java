@@ -1,12 +1,12 @@
 package org.shadowvpn.shadowvpn.ui.activity;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,12 +14,12 @@ import org.shadowvpn.shadowvpn.R;
 import org.shadowvpn.shadowvpn.model.ShadowVPNConfigure;
 import org.shadowvpn.shadowvpn.service.ShadowVPNService;
 import org.shadowvpn.shadowvpn.service.ShadowVPNService.ShadowVPNServiceBinder;
-import org.shadowvpn.shadowvpn.ui.fragment.ShadowVPNConfigureEditFragment;
 import org.shadowvpn.shadowvpn.ui.fragment.ShadowVPNListFragment;
 import org.shadowvpn.shadowvpn.ui.fragment.ShadowVPNListFragment.IOnFragmentInteractionListener;
+import org.shadowvpn.shadowvpn.util.Intents;
 import org.shadowvpn.shadowvpn.util.ShadowVPNConfigureHelper;
 
-public class MainActivity extends Activity implements IOnFragmentInteractionListener, ServiceConnection
+public class MainActivity extends ActionBarActivity implements IOnFragmentInteractionListener, ServiceConnection
 {
 	private static final int REQUEST_CODE_VPN_PREPARE = 1;
 
@@ -36,7 +36,7 @@ public class MainActivity extends Activity implements IOnFragmentInteractionList
 
 		if (pSavedInstanceState == null)
 		{
-			this.getFragmentManager().beginTransaction().add(R.id.container, ShadowVPNListFragment.newInstance()).commit();
+			this.getSupportFragmentManager().beginTransaction().add(R.id.container, ShadowVPNListFragment.newInstance()).commit();
 		}
 	}
 
@@ -86,8 +86,7 @@ public class MainActivity extends Activity implements IOnFragmentInteractionList
 		switch (pMenuItem.getItemId())
 		{
 			case R.id.menu_vpn_add:
-				final ShadowVPNConfigureEditFragment fragment = ShadowVPNConfigureEditFragment.newInstance("", "", 0, "");
-				this.getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
+				Intents.addShadowVPNConfigure(this);
 				return true;
 			default:
 				return super.onOptionsItemSelected(pMenuItem);
@@ -117,8 +116,7 @@ public class MainActivity extends Activity implements IOnFragmentInteractionList
 	@Override
 	public void onShadowVPNConfigureEdit(final ShadowVPNConfigure pShadowVPNConfigure)
 	{
-		final ShadowVPNConfigureEditFragment fragment = ShadowVPNConfigureEditFragment.newInstance(pShadowVPNConfigure.getTitle(), pShadowVPNConfigure.getServerIP(), pShadowVPNConfigure.getPort(), pShadowVPNConfigure.getPassword(), pShadowVPNConfigure.getLocalIP(), pShadowVPNConfigure.getMaximumTransmissionUnits());
-		this.getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
+		Intents.editShadowVPNConfigure(this, pShadowVPNConfigure);
 	}
 
 	@Override
