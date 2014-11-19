@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
 	compileSdkVersion 21
-	buildToolsVersion "21.0.1"
+	buildToolsVersion "21.1.1"
 
 	defaultConfig {
 		applicationId "org.shadowvpn.shadowvpn"
@@ -23,6 +23,6 @@ android {
 dependencies {
 	compile 'com.android.support:support-v4:21.0.+'
 	compile "com.android.support:appcompat-v7:21.0.+"
-	compile 'io.realm:realm-android:0.71.0'
+	compile 'io.realm:realm-android:0.72.0'
 	compile 'com.marvinlabs:android-floatinglabel-widgets:1.5.0@aar'
 }
