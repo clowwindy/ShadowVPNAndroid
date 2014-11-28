@@ -38,6 +38,7 @@ jint Java_org_shadowvpn_shadowvpn_ShadowVPN_nativeInitVPN(JNIEnv* env, jobject t
   }
   ctx->tun = tun_fd;
   ctx->socks = &sock;
+  ctx->nsock = 1;
   if (-1 == (sock = vpn_udp_alloc(args.mode == SHADOWVPN_MODE_SERVER,
                                   args.server, args.port,
                                   ctx->remote_addrp,
