@@ -15,14 +15,11 @@ jint Java_org_shadowvpn_shadowvpn_ShadowVPN_nativeInitVPN(JNIEnv* env, jobject t
                                                 jint tun_fd, jstring password,
                                                 jstring server, jint port,
                                                 jint mtu) {
-  err("nativeInitVPN");
   bzero(&args, sizeof(args));
   if (!initialized) {
     crypto_init();
-    err("crypto_init");
     initialized = 1;
   }
-  err("asdf");
   const char *c_password = (*env)->GetStringUTFChars(env, password, NULL);
   if (0 != crypto_set_password(c_password, strlen(c_password))) {
     return -1;
@@ -34,9 +31,7 @@ jint Java_org_shadowvpn_shadowvpn_ShadowVPN_nativeInitVPN(JNIEnv* env, jobject t
   args.mode = SHADOWVPN_MODE_CLIENT;
   vpn_ctx_t *ctx = &vpn_ctx;
   bzero(ctx, sizeof(vpn_ctx_t));
-  err("bzero");
   ctx->remote_addrp = (struct sockaddr *)&ctx->remote_addr;
-  err("bzero 1");
   if (-1 == pipe(ctx->control_pipe)) {
     err("pipe");
     return -1;
