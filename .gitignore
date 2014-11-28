@@ -1,3 +1,11 @@
+# shadowvpn intermediates
+app/obj/
+jni/armeabi-v7a/
+jni/armeabi/
+jni/mips/
+jni/x86/
+obj/
+
 # built application files
 *.apk
 *.ap_
