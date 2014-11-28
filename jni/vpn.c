@@ -7,6 +7,7 @@
 #include <shadowvpn.h>
 
 static int initialized = 0;
+static int sock;
 static vpn_ctx_t vpn_ctx;
 shadowvpn_args_t args;
 
@@ -41,10 +42,11 @@ jint Java_org_shadowvpn_shadowvpn_ShadowVPN_nativeInitVPN(JNIEnv* env, jobject t
     return -1;
   }
   ctx->tun = tun_fd;
-  if (-1 == (ctx->sock = vpn_udp_alloc(args.mode == SHADOWVPN_MODE_SERVER,
-                                       args.server, args.port,
-                                       ctx->remote_addrp,
-                                       &ctx->remote_addrlen))) {
+  ctx->socks = &sock;
+  if (-1 == (sock = vpn_udp_alloc(args.mode == SHADOWVPN_MODE_SERVER,
+                                  args.server, args.port,
+                                  ctx->remote_addrp,
+                                  &ctx->remote_addrlen))) {
     errf("failed to create UDP socket");
     close(ctx->tun);
     return -1;
@@ -62,5 +64,5 @@ jint Java_org_shadowvpn_shadowvpn_ShadowVPN_nativeStopVPN(JNIEnv* env, jobject t
 }
 
 jint Java_org_shadowvpn_shadowvpn_ShadowVPN_nativeGetSockFd(JNIEnv* env, jobject thiz) {
-  return vpn_ctx.sock;
+  return sock;
 }
