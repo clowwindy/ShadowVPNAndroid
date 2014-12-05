@@ -16,6 +16,8 @@ public class ShadowVPNConfigure extends RealmObject
 
 	private int maximumTransmissionUnits;
 
+	private boolean bypassChinaRoutes;
+
 	private boolean selected;
 
 	public String getTitle()
@@ -76,6 +78,16 @@ public class ShadowVPNConfigure extends RealmObject
 	public void setMaximumTransmissionUnits(final int pMaximumTransmissionUnits)
 	{
 		this.maximumTransmissionUnits = pMaximumTransmissionUnits;
+	}
+
+	public boolean isBypassChinaRoutes()
+	{
+		return this.bypassChinaRoutes;
+	}
+
+	public void setBypassChinaRoutes(final boolean pBypassChinaRoutes)
+	{
+		this.bypassChinaRoutes = pBypassChinaRoutes;
 	}
 
 	public boolean isSelected()

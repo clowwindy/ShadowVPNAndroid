@@ -14,7 +14,7 @@ public class ShadowVPNConfigureHelper
 
 	public static final int DEFAULT_MAXIMUM_TRANSMISSION_UNITS = 1440;
 
-	public static ShadowVPNConfigure create(final Context pContext, final String pTitle, final String pServerIP, final int pPort, final String pPassword, final String pLocalIP, final int pMaximumTransmissionUnits)
+	public static ShadowVPNConfigure create(final Context pContext, final String pTitle, final String pServerIP, final int pPort, final String pPassword, final String pLocalIP, final int pMaximumTransmissionUnits, final boolean pBypassChinaRoutes)
 	{
 		final Realm realm = Realm.getInstance(pContext);
 		realm.beginTransaction();
@@ -26,6 +26,7 @@ public class ShadowVPNConfigureHelper
 		configure.setPassword(pPassword);
 		configure.setLocalIP(pLocalIP);
 		configure.setMaximumTransmissionUnits(pMaximumTransmissionUnits);
+		configure.setBypassChinaRoutes(pBypassChinaRoutes);
 
 		realm.commitTransaction();
 
@@ -68,7 +69,7 @@ public class ShadowVPNConfigureHelper
 		return configures;
 	}
 
-	public static ShadowVPNConfigure update(final Context pContext, final ShadowVPNConfigure pShadowVPNConfigure, final String pTitle, final String pServerIP, final int pPort, final String pPassword, final String pLocalIP, final int pMaximumTransmissionUnits, final boolean pSelected)
+	public static ShadowVPNConfigure update(final Context pContext, final ShadowVPNConfigure pShadowVPNConfigure, final String pTitle, final String pServerIP, final int pPort, final String pPassword, final String pLocalIP, final int pMaximumTransmissionUnits, final boolean pBypassChinaRoutes, final boolean pSelected)
 	{
 		final Realm realm = Realm.getInstance(pContext);
 		realm.beginTransaction();
@@ -79,6 +80,7 @@ public class ShadowVPNConfigureHelper
 		pShadowVPNConfigure.setPassword(pPassword);
 		pShadowVPNConfigure.setLocalIP(pLocalIP);
 		pShadowVPNConfigure.setMaximumTransmissionUnits(pMaximumTransmissionUnits);
+		pShadowVPNConfigure.setBypassChinaRoutes(pBypassChinaRoutes);
 		pShadowVPNConfigure.setSelected(pSelected);
 
 		realm.commitTransaction();
@@ -86,13 +88,13 @@ public class ShadowVPNConfigureHelper
 		return pShadowVPNConfigure;
 	}
 
-	public static void selecteShadowVPNConfigure(final Context pContext, final String pTitle)
+	public static void selectShadowVPNConfigure(final Context pContext, final String pTitle)
 	{
 		final ShadowVPNConfigure configure = ShadowVPNConfigureHelper.exists(pContext, pTitle);
 
 		if (configure != null)
 		{
-			ShadowVPNConfigureHelper.update(pContext, configure, configure.getTitle(), configure.getServerIP(), configure.getPort(), configure.getPassword(), configure.getLocalIP(), configure.getMaximumTransmissionUnits(), true);
+			ShadowVPNConfigureHelper.update(pContext, configure, configure.getTitle(), configure.getServerIP(), configure.getPort(), configure.getPassword(), configure.getLocalIP(), configure.getMaximumTransmissionUnits(), configure.isBypassChinaRoutes(), true);
 		}
 	}
 

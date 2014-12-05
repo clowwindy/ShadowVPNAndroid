@@ -23,6 +23,6 @@ android {
 dependencies {
 	compile 'com.android.support:support-v4:21.0.2'
 	compile "com.android.support:appcompat-v7:21.0.2"
-	compile 'io.realm:realm-android:0.72.0'
+	compile 'io.realm:realm-android:0.75.1'
 	compile 'com.marvinlabs:android-floatinglabel-widgets:1.5.0@aar'
 }

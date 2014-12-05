@@ -37,6 +37,8 @@ public class ShadowVPNService extends VpnService
 
 	public static final String EXTRA_VPN_MAXIMUM_TRANSMISSION_UNITS = "extra_vpn_maximum_transmission_units";
 
+	public static final String EXTRA_VPN_BYPASS_CHINA_ROUTES = "extra_vpn_bypass_china_routes";
+
 	private final IBinder mBinder = new ShadowVPNServiceBinder();
 
 	private volatile Looper mServiceLooper;
@@ -135,10 +137,11 @@ public class ShadowVPNService extends VpnService
 		final String password = extras.getString(ShadowVPNService.EXTRA_VPN_PASSWORD);
 		final String localIP = extras.getString(ShadowVPNService.EXTRA_VPN_LOCAL_IP);
 		final int maximumTransmissionUnits = extras.getInt(ShadowVPNService.EXTRA_VPN_MAXIMUM_TRANSMISSION_UNITS);
+		final boolean bypassChinaRoutes = extras.getBoolean(ShadowVPNService.EXTRA_VPN_BYPASS_CHINA_ROUTES);
 
 		final Builder builder = new Builder();
 		builder.addAddress(localIP, 24);
-		this.setupShadowVPNRoute(builder);
+		this.setupShadowVPNRoute(builder, bypassChinaRoutes);
 		builder.addDnsServer("8.8.8.8");
 		builder.addDnsServer("8.8.4.4");
 		builder.setSession(this.getString(R.string.app_name) + "[" + title + "]");
@@ -163,43 +166,50 @@ public class ShadowVPNService extends VpnService
 
 		this.protect(this.mShadowVPN.getSockFileDescriptor());
 
-		ShadowVPNConfigureHelper.selecteShadowVPNConfigure(this, title);
+		ShadowVPNConfigureHelper.selectShadowVPNConfigure(this, title);
 
 		this.mShadowVPN.start();
 	}
 
-	private void setupShadowVPNRoute(final Builder pBuilder)
+	private void setupShadowVPNRoute(final Builder pBuilder, final boolean pBypassChinaRoutes)
 	{
-		final BufferedReader reader = new BufferedReader(new InputStreamReader(this.getResources().openRawResource(R.raw.foreign)));
-
-		String line;
-
-		try
+		if (pBypassChinaRoutes)
 		{
-			while ((line = reader.readLine()) != null)
-			{
-				final String[] route = line.split("/");
+			final BufferedReader reader = new BufferedReader(new InputStreamReader(this.getResources().openRawResource(R.raw.foreign)));
 
-				if (route.length == 2)
+			String line;
+
+			try
+			{
+				while ((line = reader.readLine()) != null)
 				{
-					pBuilder.addRoute(route[0], Integer.parseInt(route[1]));
+					final String[] route = line.split("/");
+
+					if (route.length == 2)
+					{
+						pBuilder.addRoute(route[0], Integer.parseInt(route[1]));
+					}
+				}
+			}
+			catch (final Throwable pThrowable)
+			{
+				Log.e(ShadowVPNService.class.getSimpleName(), "", pThrowable);
+			}
+			finally
+			{
+				try
+				{
+					reader.close();
+				}
+				catch (final IOException pIOException)
+				{
+					// do nothing
 				}
 			}
 		}
-		catch (final Throwable pThrowable)
+		else
 		{
-			Log.e(ShadowVPNService.class.getSimpleName(), "", pThrowable);
-		}
-		finally
-		{
-			try
-			{
-				reader.close();
-			}
-			catch (final IOException pIOException)
-			{
-				// do nothing
-			}
+			pBuilder.addRoute("0.0.0.0", 0);
 		}
 	}
 
