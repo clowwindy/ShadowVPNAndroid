@@ -6,7 +6,7 @@ ShadowVPN for Android
 Download
 --------
 
-ShadowVPN is beta and may have bugs. If you still want to have a try:
+ShadowVPN is in beta and may have bugs. If you still want to have a try:
 
 [Download beta].
 
