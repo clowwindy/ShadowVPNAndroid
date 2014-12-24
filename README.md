@@ -25,7 +25,10 @@ This is a Gradle-based project that works best with [Android Studio].
        - Android Studio:
          http://developer.android.com/sdk/installing/studio.html
 
-2. Configure the `ANDROID_HOME` and `ANDROID_NDK_HOME` environment variable based on the location of the Android SDK and Android NDK. Additionally, consider adding `ANDROID_HOME/tools`, and `ANDROID_HOME/platform-tools` to your `$PATH`.
+2. Configure the `ANDROID_HOME` and `ANDROID_NDK_HOME` environment
+   variables based on the location of the Android SDK and Android NDK.
+   Additionally, consider adding `ANDROID_HOME/tools` and
+   `ANDROID_HOME/platform-tools` to your `$PATH`.
 
 3. Run the Android SDK Manager by pressing the SDK Manager toolbar button
    in Android Studio or by running the `android` command in a terminal
@@ -42,11 +45,9 @@ This is a Gradle-based project that works best with [Android Studio].
 
 5. Build native library.
 
-    ```sh
-    apt-get/brew install libtool automake
-    git submodule update --init --recursive
-    make
-    ```
+        apt-get/brew install libtool automake
+        git submodule update --init --recursive
+        make
 
 6. Import the project in Android Studio:
 
@@ -56,14 +57,13 @@ This is a Gradle-based project that works best with [Android Studio].
 
 7. Choose Build > Make Project in Android Studio or run the following
     command in the project root directory:
-   ```sh
-    gradle clean assembleDebug
-   ```
+
+        gradle clean assembleDebug
 
 8. To install on your test device:
-   ```sh
-    gradle installDebug
-   ```
+
+        gradle installDebug
+
 
 [ShadowVPN]: https://github.com/clowwindy/ShadowVPN
 [Download beta]: https://play.google.com/store/apps/details?id=clowwindy.shadowvpn
