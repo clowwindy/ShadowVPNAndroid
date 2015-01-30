@@ -52,6 +52,8 @@ public class ShadowVPNConfigureEditFragment extends Fragment
 
 	private FloatingLabelEditText mMaximumTransmissionUnitsText;
 
+	private FloatingLabelEditText mConcurrency;
+
 	private SwitchCompat mBypassChinaRoutesSwitch;
 
 	@Override
@@ -78,6 +80,7 @@ public class ShadowVPNConfigureEditFragment extends Fragment
 		this.mPasswordText = (FloatingLabelEditText) view.findViewById(R.id.text_password);
 		this.mLocalIPText = (FloatingLabelEditText) view.findViewById(R.id.text_local_ip);
 		this.mMaximumTransmissionUnitsText = (FloatingLabelEditText) view.findViewById(R.id.text_maximum_transmission_units);
+		this.mConcurrency = (FloatingLabelEditText) view.findViewById(R.id.text_concurrency);
 		this.mBypassChinaRoutesSwitch = (SwitchCompat) view.findViewById(R.id.switch_bypass_china_routes);
 
 		if (TextUtils.isEmpty(this.mTitle))
@@ -85,6 +88,7 @@ public class ShadowVPNConfigureEditFragment extends Fragment
 			this.mPortText.setInputWidgetText(String.valueOf(0));
 			this.mLocalIPText.setInputWidgetText(ShadowVPNConfigureHelper.DEFAULT_LOCAL_IP);
 			this.mMaximumTransmissionUnitsText.setInputWidgetText(String.valueOf(ShadowVPNConfigureHelper.DEFAULT_MAXIMUM_TRANSMISSION_UNITS));
+			this.mConcurrency.setInputWidgetText(String.valueOf(ShadowVPNConfigureHelper.DEFAULT_CONCURRENCY));
 		}
 		else
 		{
@@ -96,6 +100,7 @@ public class ShadowVPNConfigureEditFragment extends Fragment
 			this.mPasswordText.setInputWidgetText(configure.getPassword());
 			this.mLocalIPText.setInputWidgetText(configure.getLocalIP());
 			this.mMaximumTransmissionUnitsText.setInputWidgetText(String.valueOf(configure.getMaximumTransmissionUnits()));
+			this.mConcurrency.setInputWidgetText(String.valueOf(configure.getConcurrency()));
 			this.mBypassChinaRoutesSwitch.setChecked(configure.isBypassChinaRoutes());
 		}
 
@@ -165,9 +170,10 @@ public class ShadowVPNConfigureEditFragment extends Fragment
 				final String password = this.mPasswordText.getInputWidgetText().toString();
 				final String localIP = this.mLocalIPText.getInputWidgetText().toString();
 				final int maximumTransmissionUnits = Integer.parseInt(this.mMaximumTransmissionUnitsText.getInputWidgetText().toString());
+				final int concurrency = Integer.parseInt(this.mConcurrency.getInputWidgetText().toString());
 				final boolean bypassChinaRoutes = this.mBypassChinaRoutesSwitch.isChecked();
 
-				ShadowVPNConfigureHelper.create(this.getActivity(), title, serverIP, port, password, localIP, maximumTransmissionUnits, bypassChinaRoutes);
+				ShadowVPNConfigureHelper.create(this.getActivity(), title, serverIP, port, password, localIP, maximumTransmissionUnits, concurrency, bypassChinaRoutes);
 
 				return true;
 			}
@@ -190,9 +196,10 @@ public class ShadowVPNConfigureEditFragment extends Fragment
 			final String password = this.mPasswordText.getInputWidgetText().toString();
 			final String localIP = this.mLocalIPText.getInputWidgetText().toString();
 			final int maximumTransmissionUnits = Integer.parseInt(this.mMaximumTransmissionUnitsText.getInputWidgetText().toString());
+			final int concurrency = Integer.parseInt(this.mConcurrency.getInputWidgetText().toString());
 			final boolean bypassChinaRoutes = this.mBypassChinaRoutesSwitch.isChecked();
 
-			ShadowVPNConfigureHelper.update(this.getActivity(), shadowVPNConfigure, title, serverIP, port, password, localIP, maximumTransmissionUnits, bypassChinaRoutes, shadowVPNConfigure.isSelected());
+			ShadowVPNConfigureHelper.update(this.getActivity(), shadowVPNConfigure, title, serverIP, port, password, localIP, maximumTransmissionUnits, concurrency, bypassChinaRoutes, shadowVPNConfigure.isSelected());
 		}
 
 		return inputResult;

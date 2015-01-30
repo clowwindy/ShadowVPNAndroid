@@ -16,6 +16,8 @@ public class ShadowVPNConfigure extends RealmObject
 
 	private int maximumTransmissionUnits;
 
+	private int concurrency;
+
 	private boolean bypassChinaRoutes;
 
 	private boolean selected;
@@ -78,6 +80,16 @@ public class ShadowVPNConfigure extends RealmObject
 	public void setMaximumTransmissionUnits(final int pMaximumTransmissionUnits)
 	{
 		this.maximumTransmissionUnits = pMaximumTransmissionUnits;
+	}
+
+	public int getConcurrency()
+	{
+		return this.concurrency;
+	}
+
+	public void setConcurrency(final int pConcurrency)
+	{
+		this.concurrency = pConcurrency;
 	}
 
 	public boolean isBypassChinaRoutes()

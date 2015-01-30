@@ -9,6 +9,8 @@ public class ShadowVPN
 {
 	private static final int DEFAULT_MAXIMUM_TRANSMISSION_UNITS = 1440;
 
+	private static final int DEFAULT_CONCURRENCY = 1440;
+
 	private final ParcelFileDescriptor mTUNFileDescriptor;
 
 	private final String mPassword;
@@ -19,14 +21,16 @@ public class ShadowVPN
 
 	private final int mMaximumTransmissionUnits;
 
+	private final int mConcurrency;
+
 	private boolean mIsRunning;
 
 	public ShadowVPN(final ParcelFileDescriptor pTUNFileDescriptor, final String pPassword, final String pServer, final int pPort)
 	{
-		this(pTUNFileDescriptor, pPassword, pServer, pPort, ShadowVPN.DEFAULT_MAXIMUM_TRANSMISSION_UNITS);
+		this(pTUNFileDescriptor, pPassword, pServer, pPort, ShadowVPN.DEFAULT_MAXIMUM_TRANSMISSION_UNITS, ShadowVPN.DEFAULT_CONCURRENCY);
 	}
 
-	public ShadowVPN(final ParcelFileDescriptor pTUNFileDescriptor, final String pPassword, final String pServer, final int pPort, final int pMaximumTransmissionUnits)
+	public ShadowVPN(final ParcelFileDescriptor pTUNFileDescriptor, final String pPassword, final String pServer, final int pPort, final int pMaximumTransmissionUnits, final int pConcurrency)
 	{
 		this.mTUNFileDescriptor = pTUNFileDescriptor;
 
@@ -37,11 +41,13 @@ public class ShadowVPN
 		this.mPort = pPort;
 
 		this.mMaximumTransmissionUnits = pMaximumTransmissionUnits;
+
+		this.mConcurrency = pConcurrency;
 	}
 
 	public void init() throws IOException
 	{
-		if (this.nativeInitVPN(this.mTUNFileDescriptor.getFd(), this.mPassword, this.mServer, this.mPort, this.mMaximumTransmissionUnits) != 0)
+		if (this.nativeInitVPN(this.mTUNFileDescriptor.getFd(), this.mPassword, this.mServer, this.mPort, this.mMaximumTransmissionUnits, this.mConcurrency) != 0)
 		{
 			throw new IOException("Failed to create ShadowVPN");
 		}
@@ -87,7 +93,7 @@ public class ShadowVPN
 		return this.nativeGetSockFd();
 	}
 
-	protected native int nativeInitVPN(final int pTUNFileDescriptor, final String pPassword, final String pServer, final int pPort, final int pMaximumTransmissionUnits);
+	protected native int nativeInitVPN(final int pTUNFileDescriptor, final String pPassword, final String pServer, final int pPort, final int pMaximumTransmissionUnits, final int pConcurrency);
 
 	protected native int nativeRunVPN();
 

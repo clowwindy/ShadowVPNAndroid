@@ -14,7 +14,9 @@ public class ShadowVPNConfigureHelper
 
 	public static final int DEFAULT_MAXIMUM_TRANSMISSION_UNITS = 1440;
 
-	public static ShadowVPNConfigure create(final Context pContext, final String pTitle, final String pServerIP, final int pPort, final String pPassword, final String pLocalIP, final int pMaximumTransmissionUnits, final boolean pBypassChinaRoutes)
+	public static final int DEFAULT_CONCURRENCY = 1;
+
+	public static ShadowVPNConfigure create(final Context pContext, final String pTitle, final String pServerIP, final int pPort, final String pPassword, final String pLocalIP, final int pMaximumTransmissionUnits, final int pConcurrency, final boolean pBypassChinaRoutes)
 	{
 		final Realm realm = Realm.getInstance(pContext);
 		realm.beginTransaction();
@@ -26,6 +28,7 @@ public class ShadowVPNConfigureHelper
 		configure.setPassword(pPassword);
 		configure.setLocalIP(pLocalIP);
 		configure.setMaximumTransmissionUnits(pMaximumTransmissionUnits);
+		configure.setConcurrency(pConcurrency);
 		configure.setBypassChinaRoutes(pBypassChinaRoutes);
 
 		realm.commitTransaction();
@@ -69,7 +72,7 @@ public class ShadowVPNConfigureHelper
 		return configures;
 	}
 
-	public static ShadowVPNConfigure update(final Context pContext, final ShadowVPNConfigure pShadowVPNConfigure, final String pTitle, final String pServerIP, final int pPort, final String pPassword, final String pLocalIP, final int pMaximumTransmissionUnits, final boolean pBypassChinaRoutes, final boolean pSelected)
+	public static ShadowVPNConfigure update(final Context pContext, final ShadowVPNConfigure pShadowVPNConfigure, final String pTitle, final String pServerIP, final int pPort, final String pPassword, final String pLocalIP, final int pMaximumTransmissionUnits, final int pConcurrency, final boolean pBypassChinaRoutes, final boolean pSelected)
 	{
 		final Realm realm = Realm.getInstance(pContext);
 		realm.beginTransaction();
@@ -80,6 +83,7 @@ public class ShadowVPNConfigureHelper
 		pShadowVPNConfigure.setPassword(pPassword);
 		pShadowVPNConfigure.setLocalIP(pLocalIP);
 		pShadowVPNConfigure.setMaximumTransmissionUnits(pMaximumTransmissionUnits);
+		pShadowVPNConfigure.setConcurrency(pConcurrency);
 		pShadowVPNConfigure.setBypassChinaRoutes(pBypassChinaRoutes);
 		pShadowVPNConfigure.setSelected(pSelected);
 
@@ -94,7 +98,7 @@ public class ShadowVPNConfigureHelper
 
 		if (configure != null)
 		{
-			ShadowVPNConfigureHelper.update(pContext, configure, configure.getTitle(), configure.getServerIP(), configure.getPort(), configure.getPassword(), configure.getLocalIP(), configure.getMaximumTransmissionUnits(), configure.isBypassChinaRoutes(), true);
+			ShadowVPNConfigureHelper.update(pContext, configure, configure.getTitle(), configure.getServerIP(), configure.getPort(), configure.getPassword(), configure.getLocalIP(), configure.getMaximumTransmissionUnits(), configure.getConcurrency(), configure.isBypassChinaRoutes(), true);
 		}
 	}
 

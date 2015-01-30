@@ -70,6 +70,16 @@
 			app:flw_inputWidgetTextSize="@dimen/text_size_large"
 			app:flw_labelText="@string/label_configure_maximum_transmission_units" />
 
+		<com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText
+			android:id="@+id/text_concurrency"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:inputType="number"
+			app:flw_labelTextColor="@android:color/secondary_text_light"
+			app:flw_inputWidgetTextColor="@android:color/primary_text_light"
+			app:flw_labelTextSize="@dimen/text_size_medium"
+			app:flw_inputWidgetTextSize="@dimen/text_size_large"
+			app:flw_labelText="@string/label_configure_concurrency" />
+
 		<RelativeLayout android:layout_width="match_parent" android:layout_height="?android:attr/listPreferredItemHeight">
 
 			<android.support.v7.widget.SwitchCompat android:id="@+id/switch_bypass_china_routes"

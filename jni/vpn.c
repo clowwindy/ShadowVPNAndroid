@@ -14,7 +14,7 @@ shadowvpn_args_t args;
 jint Java_org_shadowvpn_shadowvpn_ShadowVPN_nativeInitVPN(JNIEnv* env, jobject thiz,
                                                 jint tun_fd, jstring password,
                                                 jstring server, jint port,
-                                                jint mtu) {
+                                                jint mtu, jint concurrency) {
   bzero(&args, sizeof(args));
   if (!initialized) {
     crypto_init();
@@ -28,6 +28,7 @@ jint Java_org_shadowvpn_shadowvpn_ShadowVPN_nativeInitVPN(JNIEnv* env, jobject t
   args.server = (*env)->GetStringUTFChars(env, server, NULL);
   args.port = port;
   args.mtu = mtu;
+  args.concurrency = concurrency;
   args.mode = SHADOWVPN_MODE_CLIENT;
   vpn_ctx_t *ctx = &vpn_ctx;
   bzero(ctx, sizeof(vpn_ctx_t));

@@ -20,6 +20,7 @@
 	<string name="label_configure_local_ip">Local IP</string>
 	<string name="label_configure_switch_bypass_china_routes">Bypass China Routes</string>
 	<string name="label_configure_maximum_transmission_units">MTU</string>
+	<string name="label_configure_concurrency">Concurrency Number</string>
 
 	<string name="toast_vpn_configure_title_null">Title cannot be null</string>
 	<string name="toast_vpn_configure_server_ip_null">Server IP cannot be null</string>

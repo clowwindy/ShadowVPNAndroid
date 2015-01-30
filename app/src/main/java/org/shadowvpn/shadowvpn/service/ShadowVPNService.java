@@ -37,6 +37,8 @@ public class ShadowVPNService extends VpnService
 
 	public static final String EXTRA_VPN_MAXIMUM_TRANSMISSION_UNITS = "extra_vpn_maximum_transmission_units";
 
+	public static final String EXTRA_VPN_CONCURRENCY = "extra_vpn_concurrency";
+
 	public static final String EXTRA_VPN_BYPASS_CHINA_ROUTES = "extra_vpn_bypass_china_routes";
 
 	private final IBinder mBinder = new ShadowVPNServiceBinder();
@@ -137,6 +139,7 @@ public class ShadowVPNService extends VpnService
 		final String password = extras.getString(ShadowVPNService.EXTRA_VPN_PASSWORD);
 		final String localIP = extras.getString(ShadowVPNService.EXTRA_VPN_LOCAL_IP);
 		final int maximumTransmissionUnits = extras.getInt(ShadowVPNService.EXTRA_VPN_MAXIMUM_TRANSMISSION_UNITS);
+		final int concurrency = extras.getInt(ShadowVPNService.EXTRA_VPN_CONCURRENCY);
 		final boolean bypassChinaRoutes = extras.getBoolean(ShadowVPNService.EXTRA_VPN_BYPASS_CHINA_ROUTES);
 
 		final Builder builder = new Builder();
@@ -153,7 +156,7 @@ public class ShadowVPNService extends VpnService
 			return;
 		}
 
-		this.mShadowVPN = new ShadowVPN(fileDescriptor, password, serverIP, port, maximumTransmissionUnits);
+		this.mShadowVPN = new ShadowVPN(fileDescriptor, password, serverIP, port, maximumTransmissionUnits, concurrency);
 
 		try
 		{
