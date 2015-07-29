@@ -48,3 +48,5 @@ realm_version_check.timestamp
 
 # JNI files
 *jniLibs/
+
+.DS_Store
