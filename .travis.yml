@@ -1,0 +1,48 @@
+language: android
+
+addons:
+    apt:
+        packages:
+        - libgd2-xpm
+        - ia32-libs
+        - ia32-libs-multiarch
+        - git
+        - libtool
+        - automake
+        - gradle
+
+android:
+    components:
+    - platform-tools
+    - android-21
+    - build-tools-21.1.2
+    - extra
+
+jdk: oraclejdk7
+
+notifications:
+  email: false
+
+before_install:
+    - bash .travis/setup.sh
+    - source .travis/env.sh
+
+cache:
+    directories:
+    - $HOME/ndk/
+
+script:
+    - bash .travis/build.sh
+
+deploy:
+  provider: releases
+  api-key: $GITHUB_TOKEN
+  file:
+    - "$HOME/ShadowVPN-v1.0.apk"
+  skip_cleanup: true
+  on:
+    tags: true
+env:
+    global:
+        secure: "YOUR_GITHUB_TOKEN_ENCRYPT_WITH_TRAVIS (http://docs.travis-ci.com/user/encryption-keys/)"
+
