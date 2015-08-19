@@ -47,7 +47,9 @@ public class ShadowVPNConfigureEditFragment extends Fragment
 	private FloatingLabelEditText mPortText;
 
 	private FloatingLabelEditText mPasswordText;
-
+	
+	private FloatingLabelEditText mUserTokenText;
+	
 	private FloatingLabelEditText mLocalIPText;
 
 	private FloatingLabelEditText mMaximumTransmissionUnitsText;
@@ -78,6 +80,7 @@ public class ShadowVPNConfigureEditFragment extends Fragment
 		this.mServerIPText = (FloatingLabelEditText) view.findViewById(R.id.text_server_ip);
 		this.mPortText = (FloatingLabelEditText) view.findViewById(R.id.text_port);
 		this.mPasswordText = (FloatingLabelEditText) view.findViewById(R.id.text_password);
+		this.mUserTokenText = (FloatingLabelEditText) view.findViewById(R.id.text_user_token);
 		this.mLocalIPText = (FloatingLabelEditText) view.findViewById(R.id.text_local_ip);
 		this.mMaximumTransmissionUnitsText = (FloatingLabelEditText) view.findViewById(R.id.text_maximum_transmission_units);
 		this.mConcurrency = (FloatingLabelEditText) view.findViewById(R.id.text_concurrency);
@@ -98,6 +101,7 @@ public class ShadowVPNConfigureEditFragment extends Fragment
 			this.mServerIPText.setInputWidgetText(configure.getServerIP());
 			this.mPortText.setInputWidgetText(String.valueOf(configure.getPort()));
 			this.mPasswordText.setInputWidgetText(configure.getPassword());
+			this.mUserTokenText.setInputWidgetText(configure.getUserToken());
 			this.mLocalIPText.setInputWidgetText(configure.getLocalIP());
 			this.mMaximumTransmissionUnitsText.setInputWidgetText(String.valueOf(configure.getMaximumTransmissionUnits()));
 			this.mConcurrency.setInputWidgetText(String.valueOf(configure.getConcurrency()));
@@ -168,12 +172,13 @@ public class ShadowVPNConfigureEditFragment extends Fragment
 				final String serverIP = this.mServerIPText.getInputWidgetText().toString();
 				final int port = Integer.parseInt(this.mPortText.getInputWidgetText().toString());
 				final String password = this.mPasswordText.getInputWidgetText().toString();
+				final String userToken = this.mUserTokenText.getInputWidgetText().toString();
 				final String localIP = this.mLocalIPText.getInputWidgetText().toString();
 				final int maximumTransmissionUnits = Integer.parseInt(this.mMaximumTransmissionUnitsText.getInputWidgetText().toString());
 				final int concurrency = Integer.parseInt(this.mConcurrency.getInputWidgetText().toString());
 				final boolean bypassChinaRoutes = this.mBypassChinaRoutesSwitch.isChecked();
 
-				ShadowVPNConfigureHelper.create(this.getActivity(), title, serverIP, port, password, localIP, maximumTransmissionUnits, concurrency, bypassChinaRoutes);
+				ShadowVPNConfigureHelper.create(this.getActivity(), title, serverIP, port, password, userToken, localIP, maximumTransmissionUnits, concurrency, bypassChinaRoutes);
 
 				return true;
 			}
@@ -194,12 +199,13 @@ public class ShadowVPNConfigureEditFragment extends Fragment
 			final String serverIP = this.mServerIPText.getInputWidgetText().toString();
 			final int port = Integer.parseInt(this.mPortText.getInputWidgetText().toString());
 			final String password = this.mPasswordText.getInputWidgetText().toString();
+			final String userToken = this.mUserTokenText.getInputWidgetText().toString();
 			final String localIP = this.mLocalIPText.getInputWidgetText().toString();
 			final int maximumTransmissionUnits = Integer.parseInt(this.mMaximumTransmissionUnitsText.getInputWidgetText().toString());
 			final int concurrency = Integer.parseInt(this.mConcurrency.getInputWidgetText().toString());
 			final boolean bypassChinaRoutes = this.mBypassChinaRoutesSwitch.isChecked();
 
-			ShadowVPNConfigureHelper.update(this.getActivity(), shadowVPNConfigure, title, serverIP, port, password, localIP, maximumTransmissionUnits, concurrency, bypassChinaRoutes, shadowVPNConfigure.isSelected());
+			ShadowVPNConfigureHelper.update(this.getActivity(), shadowVPNConfigure, title, serverIP, port, password, userToken, localIP, maximumTransmissionUnits, concurrency, bypassChinaRoutes, shadowVPNConfigure.isSelected());
 		}
 
 		return inputResult;

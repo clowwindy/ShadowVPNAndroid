@@ -12,6 +12,8 @@ public class ShadowVPNConfigure extends RealmObject
 
 	private String password;
 
+	private String userToken;
+
 	private String localIP;
 
 	private int maximumTransmissionUnits;
@@ -60,6 +62,16 @@ public class ShadowVPNConfigure extends RealmObject
 	public void setPassword(final String pPassword)
 	{
 		this.password = pPassword;
+	}
+
+	public String getUserToken()
+	{
+		return this.userToken;
+	}
+
+	public void setUserToken(final String pUserToken)
+	{
+		this.userToken = pUserToken;
 	}
 
 	public String getLocalIP()

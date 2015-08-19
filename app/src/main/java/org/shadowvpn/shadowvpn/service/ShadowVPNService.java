@@ -33,6 +33,8 @@ public class ShadowVPNService extends VpnService
 
 	public static final String EXTRA_VPN_PASSWORD = "extra_vpn_password";
 
+	public static final String EXTRA_VPN_USER_TOKEN= "extra_vpn_user_token";
+
 	public static final String EXTRA_VPN_LOCAL_IP = "extra_vpn_local_ip";
 
 	public static final String EXTRA_VPN_MAXIMUM_TRANSMISSION_UNITS = "extra_vpn_maximum_transmission_units";
@@ -137,6 +139,7 @@ public class ShadowVPNService extends VpnService
 		final String serverIP = extras.getString(ShadowVPNService.EXTRA_VPN_SERVER_IP);
 		final int port = extras.getInt(ShadowVPNService.EXTRA_VPN_PORT);
 		final String password = extras.getString(ShadowVPNService.EXTRA_VPN_PASSWORD);
+		final String userToken = extras.getString(ShadowVPNService.EXTRA_VPN_USER_TOKEN);
 		final String localIP = extras.getString(ShadowVPNService.EXTRA_VPN_LOCAL_IP);
 		final int maximumTransmissionUnits = extras.getInt(ShadowVPNService.EXTRA_VPN_MAXIMUM_TRANSMISSION_UNITS);
 		final int concurrency = extras.getInt(ShadowVPNService.EXTRA_VPN_CONCURRENCY);
@@ -156,7 +159,8 @@ public class ShadowVPNService extends VpnService
 			return;
 		}
 
-		this.mShadowVPN = new ShadowVPN(fileDescriptor, password, serverIP, port, maximumTransmissionUnits, concurrency);
+		this.mShadowVPN = new ShadowVPN(fileDescriptor, password, userToken, serverIP, port,
+				maximumTransmissionUnits, concurrency);
 
 		try
 		{

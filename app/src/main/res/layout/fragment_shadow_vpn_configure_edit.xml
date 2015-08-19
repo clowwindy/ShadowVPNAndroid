@@ -51,6 +51,17 @@
 			app:flw_labelText="@string/label_configure_password" />
 
 		<com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText
+			android:id="@+id/text_user_token"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:inputType="textVisiblePassword"
+			app:flw_inputWidgetTextColor="@android:color/primary_text_light"
+			app:flw_inputWidgetTextSize="@dimen/text_size_large"
+			app:flw_labelText="@string/label_configure_user_token"
+			app:flw_labelTextColor="@android:color/secondary_text_light"
+			app:flw_labelTextSize="@dimen/text_size_medium"/>
+
+		<com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText
 			android:id="@+id/text_local_ip"
 			android:layout_width="match_parent" android:layout_height="wrap_content"
 			android:inputType="text"
