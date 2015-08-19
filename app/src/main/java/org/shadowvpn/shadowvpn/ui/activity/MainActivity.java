@@ -159,6 +159,7 @@ public class MainActivity extends ActionBarActivity implements IOnFragmentIntera
 			intent.putExtra(ShadowVPNService.EXTRA_VPN_SERVER_IP, this.mCurrentSelectedShadowVPNConfigure.getServerIP());
 			intent.putExtra(ShadowVPNService.EXTRA_VPN_PORT, this.mCurrentSelectedShadowVPNConfigure.getPort());
 			intent.putExtra(ShadowVPNService.EXTRA_VPN_PASSWORD, this.mCurrentSelectedShadowVPNConfigure.getPassword());
+			intent.putExtra(ShadowVPNService.EXTRA_VPN_USER_TOKEN, this.mCurrentSelectedShadowVPNConfigure.getUserToken());
 			intent.putExtra(ShadowVPNService.EXTRA_VPN_LOCAL_IP, this.mCurrentSelectedShadowVPNConfigure.getLocalIP());
 			intent.putExtra(ShadowVPNService.EXTRA_VPN_MAXIMUM_TRANSMISSION_UNITS, this.mCurrentSelectedShadowVPNConfigure.getMaximumTransmissionUnits());
 			intent.putExtra(ShadowVPNService.EXTRA_VPN_CONCURRENCY, this.mCurrentSelectedShadowVPNConfigure.getConcurrency());

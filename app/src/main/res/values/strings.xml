@@ -17,6 +17,7 @@
 	<string name="label_configure_server_ip">Server IP</string>
 	<string name="label_configure_port">Port</string>
 	<string name="label_configure_password">Password</string>
+	<string name="label_configure_user_token">User token</string>
 	<string name="label_configure_local_ip">Local IP</string>
 	<string name="label_configure_switch_bypass_china_routes">Bypass China Routes</string>
 	<string name="label_configure_maximum_transmission_units">MTU</string>
