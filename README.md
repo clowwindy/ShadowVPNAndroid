@@ -3,6 +3,8 @@ ShadowVPN for Android
 
 [ShadowVPN] for Android. Still in progress.
 
+[![Build Status](https://travis-ci.org/clowwindy/ShadowVPNAndroid.svg?branch=master)](https://travis-ci.org/clowwindy/ShadowVPNAndroid)
+
 Download
 --------
 
